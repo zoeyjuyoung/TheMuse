@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("board"))
+				.apis(RequestHandlerSelectors.basePackage("theMuse"))
 				.paths(PathSelectors.any())
 				.build();
 	}
@@ -26,8 +26,9 @@ public class SwaggerConfiguration {
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title("Spring Boot Open API with Swagger")
-				.description("게시판 REST API")
+				.description("The Muse")
 				.version("1.0.0")
 				.build();
 	}
 }
+ 
