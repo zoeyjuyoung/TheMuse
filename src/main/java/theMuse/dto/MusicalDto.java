@@ -13,5 +13,6 @@ public class MusicalDto {
 	private String musicalEndperiod;
 	private String musicalImg;
 	private int muscialPrice;
+	private int musicalLikeCt;
 	
 }

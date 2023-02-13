@@ -11,4 +11,5 @@ public class LoginMapper {
 	public int registUser(UserDto userDto) throws Exception;
 	public UserDto selectUserByUserId(String userId);
 	
+	
 }
