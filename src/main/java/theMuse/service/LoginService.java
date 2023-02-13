@@ -1,13 +1,12 @@
-package theMuse.mapper;
+package theMuse.service;
 
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import theMuse.dto.LoginDto;
 import theMuse.dto.UserDto;
 
-@Mapper
-public interface LoginMapper {
+public interface LoginService extends UserDetailsService {
 	public UserDto login(LoginDto loginDto) throws Exception;
 	public int registUser(UserDto userDto) throws Exception;
-	public UserDto selectUserByUserId(String userId);
+	
 }

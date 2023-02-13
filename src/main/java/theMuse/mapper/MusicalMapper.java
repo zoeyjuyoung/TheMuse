@@ -1,5 +1,5 @@
 package theMuse.mapper;
 
-public class MusicalMapper {
+public interface MusicalMapper {
 
 }
