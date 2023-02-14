@@ -43,8 +43,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/login").permitAll()
 		.anyRequest().authenticated()
-		.and().addFilter(getAuthenticationFilter());
-//		.addFilterBefore(jwtRequestFilter, AuthenticationFilter.class).cors();
+		.and().addFilter(getAuthenticationFilter())
+		.addFilterBefore(jwtRequestFilter, AuthenticationFilter.class).cors();
 	}
 	
 	private AuthenticationFilter getAuthenticationFilter() throws Exception {
