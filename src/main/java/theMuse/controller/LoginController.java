@@ -7,14 +7,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import theMuse.dto.LoginDto;
 import theMuse.dto.UserDto;
 import theMuse.service.LoginService;
 
 @RestController
 public class LoginController {
-	@Autowired
-	private LoginService loginService;
 	
+	
+	@Autowired
+	private LoginService loginService; 	
+//	@PostMapping("/login")
+//	public ResponseEntity<Object> login(LoginDto loginDto) throws Exception {
+//		UserDto userDto = loginService.login(loginDto);
+//		if (userDto == null) {
+//			userDto.setUserPassword("");
+//			return ResponseEntity.status(HttpStatus.OK).body(userDto);
+//		} else {
+//			return ResponseEntity.status(HttpStatus.OK).body(null);
+//		}
+//	}
 	
 	@PostMapping("/api/regist")
 	public ResponseEntity<Object> regist(@RequestBody UserDto userDto) throws Exception {
