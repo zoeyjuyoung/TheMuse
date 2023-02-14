@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="theMuse.mapper.LoginMapper">
+<mapper namespace="theMuse.mapper.MusicalMapper">
+
+<!-- 페이징 : 검색 조건과 일치하는 게시물의 개수 조회 -->
+	<select id = "selectMusicalListCount" resultType="int">
+	    SELECT count(*)
+	     FROM t_musical
+	    WHERE deleted_yn = 'N'
+	</select> 
+	
+<!-- 뮤지컬 목록 조회 /페이징 : offset에서부터 8개만 조회해서 반환 -->
+	<select id = "selectMusicalList" resultType = "theMuse.dto.MusicalDto">
+		SELECT musical_idx, musical_name, musical_startperiod, musical_endperiod, musical_img
+		  FROM t_musical
+		 WHERE deleted_yn = "N"
+	  ORDER BY musical_like_ct desc
+		 LIMIT #{offset}, 8
+	</select>
+	
+<!-- 관리자 : 뮤지컬 정보 등록 -->
+	<insert id="insertMusicalInfo" parameterType="theMuse.dto.MusicalDto">
+		INSERT INTO t_musical (musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price)
+		   	 VALUES (#{musicalIdx}, #{musicalName}, #{musicalActor}, #{musicalRunningtime}, #{musicalStartperiod}, #{musicalEndperiod}, #{musicalImg}, #{musicalDetailImg}, #{musicalPrice})
+	</insert>
+	
+<!-- 관리자 : 뮤지컬 정보 상세 조회 -->
+	<select id = "selectMusicalDetail" parameterType="int" resultType="theMuse.dto.MusicalDto">
+		SELECT musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price
+		  FROM t_musical
+		 WHERE deleted_yn = 'N' 
+		   AND musical_idx=#{musicalIdx}
+	</select>
+
+<!-- 관리자 : 뮤지컬 정보 수정 -->
+	<update id = "updateMusicalInfo" parameterType="theMuse.dto.MusicalDto">
+		UPDATE t_musical
+		   SET musical_name = #{musicalName},
+		       musical_actor = #{musicalActor},
+		       musical_runningtime = #{musicalRunningtime}, 
+		       musical_startperiod = #{musicalStartperiod},
+		       musical_endperiod = #{musicalEndperiod},
+		       musical_img = #{musicalImg},
+		       musical_detail_img = #{musicalDetailImg},
+		       musical_price = #{musicalPrice}
+		 WHERE musical_idx = #{musicalIdx}		     		
+	</update>
+	
+<!-- 관리자 : 뮤지컬 정보 삭제 -->
+	<delete id = "deleteMusicalInfo" parameterType="int">
+		UPDATE t_musical
+		   SET deleted_yn = 'Y',
+		       musical_idx = musical_idx
+	     WHERE musical_idx = #{musicalIdx}
+	</delete>
+
+<!-- 좋아요 수 업데이트 -->
+	<update id = "updateLikesCount" parameterType="int">
+		UPDATE t_musical
+		   SET like_ct = like_ct = 1
+	     WHERE musical_idx = #{musicalIdx}
+	</update>
 
 </mapper>

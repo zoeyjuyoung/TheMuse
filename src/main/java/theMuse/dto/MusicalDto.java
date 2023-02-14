@@ -12,7 +12,7 @@ public class MusicalDto {
 	private String musicalStartperiod;
 	private String musicalEndperiod;
 	private String musicalImg;
+	private String musicalDetailImg;
 	private int muscialPrice;
 	private int musicalLikeCt;
-	
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="theMuse.mapper.CommentMapper">
+	<!-- 사용자 한줄평 작성 -->
+	<insert id = "insertComment" parameterType="theMuse.dto.CommentDto">
+		INSERT INTO t_musical (comment_content, comment_dt, comment_star_ct, user_nickname)
+		      VALUE (#{commentContent}, now(), #{commentStarCt}, #{userNickname})
+	</insert>
+
+<!-- 사용자 한줄평 조회 -->
+	<select id = "selectCommentList" parameterType="theMuse.dto.CommentDto">
+       SELECT comment_idx, comment_content, comment_dt, comment_star_ct, user_nickname)
+	     FROM t_comment
+	    WHERE deleted_yn = 'N'
+	</select>
+
+<!-- 사용자 한줄평 수정 -->
+	<update id = "updateComment" parameterType = "theMuse.dto.CommentDto">
+		UPDATE t_comment
+		   SET comment_content = #{commentContent},
+		       comment_dt = now(),
+		       comment_star_ct = #{commentStarCT},
+		       comment_idx = comment_idx
+		 WHERE comment_idx = #{comment_idx}
+	</update>
+
+<!-- 사용자 한줄평 삭제 -->
+	<delete id = "deleteComment" parameterType = "theMuse.dto.CommentDto">
+		UPDATE t_comment
+		   SET deleted_yn = 'Y',
+		       comment_dt = now(),
+		       comment_idx = comment_idx
+		 WHERE comment_idx = #{comment_idx}
+	</delete>
+
+</mapper>
