@@ -1,18 +1,81 @@
 package theMuse.service;
 
-public class CommentServiceImpl {
-	// 설정 파일에서 업로드 파일이 저장되는 경로를 가져와서 가지고 있는 변수
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+import theMuse.dto.CommentDto;
+import theMuse.mapper.CommentMapper;
+
+@Slf4j
+@Service
+public class CommentServiceImpl implements CommentService {
+
+	@Autowired
+	private CommentMapper commentMapper;
+
 	// 사용자 한줄평 목록 조회
-	
+//	@Override
+//	public List<CommentDto> selectCommentList() throws Exception {
+//		return commentMapper.selectCommentList();
+//	}
+    
 	// 사용자 한줄평 작성
-	
-	// 파일을 저장하고 저장 경로를 반환하는 메서드
-	// 리뷰 사진 저장
-	
-	
+	@Override
+	public int insertComment(CommentDto commentDto) throws Exception {
+		return commentMapper.insertComment(commentDto);
+		
+	}
 	// 사용자 한줄평 수정
+	@Override
+	public int updateComment(CommentDto commentDto) throws Exception {
+		return commentMapper.updateComment(commentDto);
+		
+	}
 	// 사용자 한줄평 삭제
-	
-	
+	@Override
+	public int deleteComment(int commentIdx) throws Exception {
+		return commentMapper.deleteComment(commentIdx);
+		
+	}
 	// 별점 등록 기능
+//	@Override
+//	public void updateLikesCount(int commentIdx) throws Exception {
+//		
+//	
+
+	@Override
+	public List<CommentDto> selectCommentList(int musicalIdx) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

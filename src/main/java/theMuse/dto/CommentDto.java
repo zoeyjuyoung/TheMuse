@@ -7,5 +7,7 @@ public class CommentDto {
 	private int commentIdx;
 	private String commentContent;
 	private String commentDt;
-	private String commentStarCt;
+	//Todo private String commentStarCt;
+	private int commentUserIdx;
+	private int commentMusicalIdx;
 }

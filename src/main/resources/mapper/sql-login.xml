@@ -11,7 +11,7 @@
 	<select id="selectUserByUserId" parameterType="String" resultType="theMuse.dto.UserDto">
 		select user_id, user_password, user_nickname 
 		  from t_user 
-		 where user_id = #{userId}
+		 where user_id = #{userId} 
 	</select>
 	
 	<insert id="registUser" parameterType="theMuse.dto.UserDto">

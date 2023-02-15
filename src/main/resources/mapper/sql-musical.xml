@@ -14,24 +14,32 @@
 	<select id = "selectMusicalList" resultType = "theMuse.dto.MusicalDto">
 		SELECT musical_idx, musical_name, musical_startperiod, musical_endperiod, musical_img
 		  FROM t_musical
-		 WHERE deleted_yn = "N"
+		 WHERE musical_deleted_yn = "Y"
 	  ORDER BY musical_like_ct desc
-		 LIMIT #{offset}, 8
 	</select>
+	
+<!-- 사용자 : 뮤지컬 정보 상세 조회 -->
+	<select id = "selectMusicalDetail" parameterType="int" resultType="theMuse.dto.MusicalDto">
+		SELECT musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price, musical_like_ct,comment_content, comment_dt
+		  FROM t_musical, t_comment
+		 WHERE musical_deleted_yn = 'N' 
+		   AND musical_idx=#{musicalIdx}
+		   AND comment_musical_idx = #{musicalIdx}	
+	</select>	
 	
 <!-- 관리자 : 뮤지컬 정보 등록 -->
 	<insert id="insertMusicalInfo" parameterType="theMuse.dto.MusicalDto">
-		INSERT INTO t_musical (musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price)
-		   	 VALUES (#{musicalIdx}, #{musicalName}, #{musicalActor}, #{musicalRunningtime}, #{musicalStartperiod}, #{musicalEndperiod}, #{musicalImg}, #{musicalDetailImg}, #{musicalPrice})
+		INSERT INTO t_musical (musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price)
+		   	 VALUES (#{musicalName}, #{musicalActor}, #{musicalRunningtime}, #{musicalStartperiod}, #{musicalEndperiod}, #{musicalImg}, #{musicalDetailImg}, #{musicalPrice})
 	</insert>
 	
 <!-- 관리자 : 뮤지컬 정보 상세 조회 -->
-	<select id = "selectMusicalDetail" parameterType="int" resultType="theMuse.dto.MusicalDto">
-		SELECT musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price
+	<select id = "selectAdminMusicalDetail" parameterType="int" resultType="theMuse.dto.MusicalDto">
+		SELECT musical_idx, musical_name, musical_actor, musical_runningtime, musical_startperiod, musical_endperiod, musical_img, musical_detail_img, musical_price, musical_like_ct
 		  FROM t_musical
-		 WHERE deleted_yn = 'N' 
+		 WHERE musical_deleted_yn = 'N' 
 		   AND musical_idx=#{musicalIdx}
-	</select>
+	</select>		
 
 <!-- 관리자 : 뮤지컬 정보 수정 -->
 	<update id = "updateMusicalInfo" parameterType="theMuse.dto.MusicalDto">
@@ -50,7 +58,7 @@
 <!-- 관리자 : 뮤지컬 정보 삭제 -->
 	<delete id = "deleteMusicalInfo" parameterType="int">
 		UPDATE t_musical
-		   SET deleted_yn = 'Y',
+		   SET musical_deleted_yn = 'Y',
 		       musical_idx = musical_idx
 	     WHERE musical_idx = #{musicalIdx}
 	</delete>
@@ -58,7 +66,7 @@
 <!-- 좋아요 수 업데이트 -->
 	<update id = "updateLikesCount" parameterType="int">
 		UPDATE t_musical
-		   SET like_ct = like_ct = 1
+		   SET musical_like_ct = musical_like_ct + 1
 	     WHERE musical_idx = #{musicalIdx}
 	</update>
 
